@@ -7,64 +7,96 @@ function getComputerChoice() {
     } else {
         return "scissor";
     }
-}
+};
 
-function getHumanChoice() {
-    let answer = prompt("Choose your move");
-    return answer.toLowerCase();
-}
+const button1 = document.getElementById("rock");
+const button2 = document.getElementById("paper");
+const button3 = document.getElementById("scissor");
+const human = document.getElementById("HumanScore");
+const computer = document.getElementById("ComputerScore");
+const winner = document.getElementById("Winner");
 
-function playRound(humanChoice, computerChoice) {
+
+
+let humanScore = 0;
+let computerScore = 0; 
+
+
+function playRoundRock(computerChoice) {
     let result;
 
-    if (humanChoice === computerChoice) {
+    if (button1.id === computerChoice) {
         result = "draw";
-    } else if (
-        (humanChoice === "rock" && computerChoice === "scissor") ||
-        (humanChoice === "paper" && computerChoice === "rock") ||
-        (humanChoice === "scissor" && computerChoice === "paper")
-    ) {
-        result = "win";
+    } else if (computerChoice === "scissor") {
         humanScore++;
     } else {
-        result = "lost";
         computerScore++;
     }
 
-    return result;
-}
+    human.innerText = `Human Score: ${humanScore}`;
+    computer.innerText = `Computer Score: ${computerScore}`;
+    Winner()
 
-let humanScore = 0;
-let computerScore = 0;
+};
 
-function playGame() {
-    console.log("Let's play a best-of-five round!");
+function playRoundPaper(computerChoice) {
+    let result;
 
-    for (let round = 1; round <= 5; round++) {
-    
-
-        const humanSelection = getHumanChoice();
-        const computerSelection = getComputerChoice();
-
-        const roundResult = playRound(humanSelection, computerSelection);
-        console.log("Human:", humanSelection);
-        console.log("Computer:", computerSelection);
-        console.log("Result:", roundResult);
-        console.log("Human Score:", humanScore);
-        console.log("Computer Score:", computerScore);
-    }
-
-    console.log("Final Scores:");
-    console.log("Human Score:", humanScore);
-    console.log("Computer Score:", computerScore);
-
-    if (humanScore > computerScore) {
-        console.log("You win the best-of-five round!");
-    } else if (humanScore < computerScore) {
-        console.log("Computer wins the best-of-five round!");
+    if (button2.id === computerChoice) {
+        result = "draw";
+    } else if (computerChoice === "rock") {
+        humanScore++;
     } else {
-        console.log("It's a tie in the best-of-five round!");
+        computerScore++;
     }
-}
 
-playGame();
+    human.innerText = `Human Score: ${humanScore}`;
+    computer.innerText = `Computer Score: ${computerScore}`;
+    Winner()
+
+};
+
+function playRoundScissor(computerChoice) {
+    let result;
+
+    if (button3.id === computerChoice) {
+        result = "draw";
+    } else if (computerChoice === "paper") {
+        humanScore++;
+    } else {
+        computerScore++;
+    }
+
+    human.innerText = `Human Score: ${humanScore}`;
+    computer.innerText = `Computer Score: ${computerScore}`;
+    Winner();};
+
+    button1.addEventListener("click", function() {
+        const computerChoice = getComputerChoice();
+        playRoundRock(computerChoice);
+    });
+    
+    button2.addEventListener("click", function() {
+        const computerChoice = getComputerChoice();
+        playRoundPaper(computerChoice);
+    });
+    
+    button3.addEventListener("click", function() {
+        const computerChoice = getComputerChoice();
+        playRoundScissor(computerChoice);
+    });
+
+function Winner(){
+    if (humanScore>=5){
+        human.innerText = `Human Score: 5`;
+        winner.innerText = "You won"
+    } else if (computerScore>=5){
+        computer.innerText = `Computer Score: 5`;
+        winner.innerText = "Computer won"
+    }
+};
+
+Winner()
+
+
+
